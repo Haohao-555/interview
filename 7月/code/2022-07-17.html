@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        width: 400px;
+        height: 400px;
+        margin: 60px auto;
+        border-radius: 12px;
+        box-shadow: 1px 1px 1px 1px rgb(0, 0, 0, 0.1);
+        line-height: 400px;
+        text-align: center;
+        font-size: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">1</div>
+  </body>
+  <script src="./js/Throttle.js"></script>
+  <script>
+    let event = (e) => {
+      let i = e.target.innerHTML - 0;
+      e.target.innerHTML = ++e.target.innerHTML;
+    };
+    document
+      .querySelector(".container")
+      .addEventListener(
+        "mousemove",
+        throttle(event, 2000, { leading: false, trailing: true })
+      );
+  </script>
+</html>

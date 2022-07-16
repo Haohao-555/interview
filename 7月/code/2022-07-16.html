@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$on 和 $emit</title>
+    <style>
+        .wrapper {
+            width: 660px;
+            margin: 60px auto;
+            display: flex;
+            justify-content: space-between;
+        }
+        .container {
+            text-align: center;
+            width: 300px;
+            height: 300px;
+            padding: 0px 12px;
+            box-sizing: border-box;
+            border-radius: 12px;
+            box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+        }
+        .container .content {
+            height: 140px;
+            margin-bottom: 12px;
+            border: 1px solid #333;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+        .container:last-child .content {
+            border: none;
+        }
+        .container .content textarea {
+            width: 266px;
+            height: 136px;
+            resize: none;
+            border-radius: 3px;
+        }
+        .container .btn-group {
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <h3>订阅者</h3>
+            <div class="content">
+                <div class="a"></div>
+                <div class="b"></div>
+                <div class="c"></div>
+            </div>
+            <div class="btn-group publish">
+                <button class="btn" data-index="A">订阅事件A</button>
+                <button class="btn" data-index="B">订阅事件B</button>
+                <button class="btn" data-index="C">订阅事件C</button>
+            </div>
+            <div class="btn-group cancel-publish">
+                <button class="btn" data-index="A">取消事件A</button>
+                <button class="btn" data-index="B">取消事件B</button>
+                <button class="btn" data-index="C">取消事件C</button>
+            </div>
+        </div>
+        <div class="container">
+            <h3>发布者</h3>
+            <div class="content">
+                <textarea></textarea>
+            </div>
+            <div class="btn-group send">
+                <button class="btn" data-index="A">发布事件A</button>
+                <button class="btn" data-index="B">发布事件B</button>
+                <button class="btn" data-index="C">发布事件C</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./js/EventBus.js"></script>
+<script>
+  let EB = new EventBus();
+  let a;
+  let b; 
+  let c;
+  // 订阅事件
+  document.querySelector('.publish').addEventListener("click", (e) => {
+      if (e.target.tagName == "BUTTON") {
+          switch(e.target.dataset.index) {
+              case "A":
+                  document.querySelector(".container:first-child .content .a").innerHTML = "已经订阅事件A 等待发布者发布事件";
+                  a = EB.$on('A', (value) => {
+                      document.querySelector(".container:first-child .content .a").innerHTML = "订阅事件A-触发，内容为:"+ value;
+                  });
+              break;
+              case "B":
+                  document.querySelector(".container:first-child .content .b").innerHTML = "已经订阅事件B 等待发布者发布事件";
+                  b = EB.$on('B', (value) => {
+                      document.querySelector(".container:first-child .content .b").innerHTML = "订阅事件B-触发，内容为:"+ value;
+                  });
+              break;
+              case "C":
+                  document.querySelector(".container:first-child .content .c").innerHTML = "已经订阅事件C 等待发布者发布事件";
+                  c = EB.$on('C', (value) => {
+                      document.querySelector(".container:first-child .content .c").innerHTML = "订阅事件C-触发，内容为:"+ value;
+                  });
+              break;
+          }
+      }
+  });
+  // 取消订阅事件
+  document.querySelector('.cancel-publish').addEventListener("click", (e) => {
+      if (e.target.tagName == "BUTTON") {
+          switch(e.target.dataset.index) {
+              case "A":
+                  EB.$off('A', a);
+                  document.querySelector(".container:first-child .content .a").innerHTML = "";
+              break;
+              case "B":
+                  EB.$off('B', b);
+                  document.querySelector(".container:first-child .content .b").innerHTML = "";
+              break;
+              case "C":
+                  EB.$off('C', c);
+                  document.querySelector(".container:first-child .content .c").innerHTML = "";
+              break;
+          }
+      }
+  })
+
+  document.querySelector('.send').addEventListener("click", (e) => {
+      if (e.target.tagName == "BUTTON") {
+          
+          let value = document.querySelector("textarea").value || '默认值'
+          let flag;
+          switch(e.target.dataset.index) {
+              case "A":
+                  flag = EB.$emit('A', value);
+              break;
+              case "B":
+                  flag = EB.$emit('B', value);
+              break;
+              case "C":
+                  flag = EB.$emit('C', value);
+              break;
+          }
+          if (flag == -1) alert("订阅者没有订阅事件"+ e.target.dataset.index);
+      }
+  })
+</script>
+</html>

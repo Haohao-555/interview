@@ -1,0 +1,30 @@
+<!--
+ * @Date: 2022-07-18 19:53:33
+ * @Author: 浩
+ * @LastEditors: 浩
+ * @FilePath: \code\2022-07-18.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <input type="text" />
+      <button>确定</button>
+      <div class="area"></div>
+    </div>
+  </body>
+  <!-- <script src="./js/defineProperty.js"></script> -->
+  <script src="./js/proxy.js"></script>
+  <script>
+    let obj = {};
+    let inp = document.querySelector("input[type='text']")
+    $setKeyResponse(obj, "message", ".area");
+    inp.oninput = () => (obj.message = inp.value);
+  </script>
+</html>

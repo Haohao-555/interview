@@ -39,3 +39,20 @@ console.log(test(str, 4)) // PIN ALSIG YAHR PI
 // P      I
 // PIN ALSIG YAHR PI
 
+function test(digits) {
+  const len = digits.length;
+  for (let i = len - 1; i >= 0; i--) {
+    digits[i]++;
+    digits[i] %= 10; // 10 % 10 = 0 (1 ~ 9) % 10 = (1 ~ 9)
+    // 没有进位，直接返回
+    if (digits[i] != 0) return digits;
+    // 来到这里：说明前者加了1 导致要进位 故读取下一位进行加一
+  }
+  // 来到这里：说明 数组中所有值都为 0， 并且还少一位
+  digits = [...Array(len + 1)].fill(0);
+  // 补齐
+  digits[0] = 1;
+  return digits;
+}
+console.log(test([9, 9, 9]))
+

@@ -35,3 +35,33 @@ var countAndSay = function (n) {
   }
   return res;
 };
+
+/**
+ * @param {number[]} candidates
+ * @param {number} target
+ * @return {number[][]}
+ */
+var combinationSum = function (candidates, target) {
+  // 升序
+  candidates.sort((a, b) => a - b);
+  // 结果
+  let res = [];
+
+  let dfs = function (start, target, comine) {
+    // 满足条件
+    if (target == 0) {
+      res.push([...comine])
+    }
+
+    for (let i = start; i < candidates.length; i++) {
+      // 当前值大于目标值，无需添加
+      if (target < candidates[i]) return;
+      // 该值可能满足条件
+      comine.push(candidates[i]);
+      dfs(i, target - candidates[i], comine);
+      comine.pop(); // 回溯
+    }
+  }
+  dfs(0, target, []);
+  return res;
+};

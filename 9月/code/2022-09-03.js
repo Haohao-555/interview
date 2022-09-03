@@ -7,7 +7,7 @@ var solveSudoku = function (board) {
     // 行不能重复
     for (let i = 0; i < 9; i++) {
       if (board[row][i] === val) return false
-      
+
     }
     // 列不能重复
     for (let i = 0; i < 9; i++) {
@@ -19,7 +19,7 @@ var solveSudoku = function (board) {
     for (let i = boxRow; i < boxRow + 3; i++) {
       for (let j = boxCol; j < boxCol + 3; j++) {
         if (board[i][j] === val) return false
-        
+
       }
     }
 
@@ -58,3 +58,31 @@ let board = [
   [".", ".", ".", ".", "8", ".", ".", "7", "9"]
 ]
 console.log(solveSudoku(board))
+
+/**
+ * @param {number[]} height
+ * @return {number}
+ */
+var trap = function (height) {
+  let res = 0;
+  let l = 0;
+  let r = height.length - 1;
+
+  let lmax = 0; // 左边最大值
+  let rmax = 0; // 右边最大值
+
+  while (l < r) {
+    // 更新最大值
+    lmax = Math.max(lmax, height[l]);
+    rmax = Math.max(rmax, height[r]);
+
+    if (lmax < rmax) { // 左边短于右边
+      res += (lmax - height[l])
+      l++;
+    } else { // 右边短于左边
+      res += (rmax - height[r])
+      r--;
+    }
+  }
+  return res;
+};

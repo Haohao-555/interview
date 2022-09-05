@@ -23,3 +23,24 @@ var canJump = function (nums) {
   // 遍历完数组， distance 为 0 说明可以进行跳跃
   return distance === 0;
 }
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var jump = function (nums) {
+  // 最远距离
+  let maxPos = 0;
+  // 最远点
+  let end = 0;
+  // 步长
+  let ans = 0;
+  for (let i = 0; i < nums.length - 1; i++) {
+    maxPos = Math.max(maxPos, nums[i] + i);
+    if (i == end) { // 到达最远边界
+      end = maxPos;
+      ans++;
+    }
+  }
+  return ans;
+};

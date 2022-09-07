@@ -22,3 +22,21 @@ var rotate = function (matrix) {
   }
   return matrix;
 };
+
+/**
+ * @param {string[]} strs
+ * @return {string[][]}
+ */
+var groupAnagrams = function (strs) {
+  let map = new Map();
+  for (let i = 0; i < strs.length; i++) {
+
+    // acb => abc 把 abc当作map的key值
+    let key = strs[i].split('').sort().join('');
+
+    if (!map.has(key)) map.set(key, [])
+
+    map.get(key).push(strs[i]);
+  }
+  return [...map.values()];
+};

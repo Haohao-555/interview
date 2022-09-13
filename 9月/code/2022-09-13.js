@@ -42,3 +42,40 @@ let data = [
   [1, 3], [2, 6], [8, 10], [15, 18]
 ]
 console.log(getMerge(data));
+
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} k
+ * @return {ListNode}
+ */
+var rotateRight = function (head, k) {
+  if (!head) return null;
+
+  let cur = head;
+
+  // 链表头尾相连
+  let n = 1;
+  while (cur.next) {
+    cur = cur.next;
+    n++;
+  }
+  cur.next = head;
+
+  // 指针后移
+  for (let i = 0; i < n - k % n; i++) {
+    cur = cur.next;
+  }
+  head = cur.next;
+
+  // 断开链表
+  cur.next = null;
+  return head;
+};

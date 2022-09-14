@@ -38,3 +38,40 @@ var minPathSum = function (grid) {
   return dp[0][0];
 }
 console.log(minPathSum([[1, 2, 3], [4, 5, 6]]))
+
+/**
+ * @param {number[][]} intervals
+ * @param {number[]} newInterval
+ * @return {number[][]}
+ */
+var insert = function (intervals, newInterval) {
+  let n = intervals.length;
+  let i = 0;
+  let ans = [];
+
+  // 将左侧没有包含新区间的加入到结果集中
+  while (i < n && intervals[i][1] < newInterval[0]) {
+    // 结束位小于新区间的开始位
+    ans.push(intervals[i]);
+    i++;
+  }
+
+  // 将包含区间合并
+  if (i < n) {
+    // 找到最小起始位
+    newInterval[0] = Math.min(intervals[i][0], newInterval[0]);
+    while (i < n && intervals[i][0] <= newInterval[1]) {
+      newInterval[1] = Math.max(intervals[i][1], newInterval[1]);
+      i++;
+    }
+  }
+  ans.push(newInterval);
+
+  // 将右侧区间填入
+  while (i < n) {
+    ans.push(intervals[i])
+    i++;
+  }
+
+  return ans;
+};

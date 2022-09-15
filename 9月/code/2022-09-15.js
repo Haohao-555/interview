@@ -27,3 +27,32 @@ let matrix = [
   [18, 21, 23, 26, 30]
 ]
 console.log(searchMatrix(matrix, 8));
+
+var sortColors = function (nums) {
+  let swap = function (nums, i, j) {
+    let temp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = temp;
+  }
+
+  let n = nums.length;
+  let p0 = 0;
+  let p1 = 0;
+
+  for (let i = 0; i < n; i++) {
+    if (nums[i] === 1) {
+      swap(nums, i, p1);
+      p1++;
+    } else if (nums[i] === 0) {
+      swap(nums, i, p0);
+
+      if (p0 < p1) swap(nums, i, p1);
+
+      p0++;
+      p1++;
+    }
+  }
+  return nums;
+}
+let nums = [1, 2, 0, 2, 0, 1, 2, 1, 1, 0, 2, 1, 1, 1, 1, 2];
+console.log(sortColors(nums));

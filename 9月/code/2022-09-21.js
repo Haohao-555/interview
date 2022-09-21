@@ -22,4 +22,28 @@ var deleteDuplicates = function (head) {
   }
   // dummy.next 指向的是 head 的地址
   return dummy.next;
-} 
+}
+
+/**
+ * @param {string[]} words1
+ * @param {string[]} words2
+ * @return {string[]}
+ */
+var wordSubsets = function (words1, words2) {
+  const B = new Array(26).fill(0);
+  words2.forEach(w => {
+    const tmp = new Array(26).fill(0);
+    for (const c of w) {
+      const idx = c.charCodeAt() - 97
+      if (tmp[idx]++ === B[idx]) B[idx]++;
+    }
+  });
+  return words1.filter(w => {
+    const tmp = B.slice();
+    for (const c of w) {
+      const idx = c.charCodeAt() - 97;
+      if (tmp[idx] > 0) tmp[idx]--;
+    }
+    return tmp.every(cnt => cnt === 0);
+  })
+};
